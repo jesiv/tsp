@@ -15,14 +15,19 @@ body{
   height: 100%;
 }
 
+#graph_container {
+  width: 750px;
+  padding-left : 150px;
+}
+
 #graph {
-  padding-left: 250px;
+  margin: 0;
+  padding-left: 0px;
   padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
+ /* margin-left: auto;
+  margin-right: auto;*/
   text-align: center;
   display: block;
-  width: 750px;
   position: absolute;
 }
 
@@ -33,12 +38,12 @@ h2 {
   color: #fff;
 }
 
-button {
-  width = 200px;
-  height = 100px;
+#actions_menu {
+  width:5px;
+  height:100px;
+  float:left;
 }
 
-#actions_menu {
-  width:10px;
-  float:left;
+button {
+  position: relative;
 }
