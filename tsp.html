@@ -15,18 +15,14 @@
         <h2>¡Animate a encontrar el camino más corto!</h2>
       </div><!--header end-->
 
-      <div id="actions_menu" style="width:10px; float:left; ">
+      <div id="actions_menu">
         <h3> Acciones </h3>
         <ul>
           <li><button type="button">Empezar</button></li>
-          <li><button type="button"
-          onclick="button_click('up');">Arriba</button></li>
-          <li><button type="button"
-          onclick="button_click('down');">Abajo</button></li>
-          <li><button type="button"
-          onclick="button_click('left');">Izquierda</button></li>
-          <li><button type="button"
-          onclick="button_click('right');">Derecha</button></li>
+          <li><button type="button" onclick="button_click('up');">Arriba</button></li>
+          <li><button type="button" onclick="button_click('down');">Abajo</button></li>
+          <li><button type="button" onclick="button_click('left');">Izquierda</button></li>
+          <li><button type="button" onclick="button_click('right')">Derecha</button></li>
         </ul>
       </div><!--actions_menu end-->
       
@@ -39,78 +35,122 @@
           context.arc(coords[0], coords[1], radius, 0, 2 * Math.PI, false);
           context.fillStyle = color;
           context.fill();
-          context.lineWidth = 5;
-          context.strokeStyle = '#003300';
+          context.strokeStyle = '#000000';
           context.stroke();
-          
         }
 
-        var coords = [ [50, 50], [150, 50], [250, 50], [50, 150], [150, 150], [250, 150] ];
-        for(var i = 0; i < coords.length; ++i){
-          draw_circle(coords[i], 'green', 20);        
+        function draw_line(start, end, color, radius){
+          var canvas = document.getElementById('graph');
+          var context = canvas.getContext('2d');
+          context.beginPath();
+          context.moveTo(start[0], start[1]);
+          context.lineTo(end[0], end[1]);
+          context.lineWidth = 1;
+
+          // set line color
+          context.strokeStyle = '#002e63'; 
+          context.stroke();
+        }
+
+         //var coords= [ [20, 50], [20,80], [20,110], [50, 50], [50,80], [50,110], [80, 50], [80,80], [80,110] ];
+         //var coords = [ [50, 50], [150, 50], [250, 50], [50, 150], [150, 150], [250, 150] ];
+         // 4 x 6
+         var columns = 6
+         var rows = 4
+         var nodes = columns * rows
+         var coords = [ [10, 30], [35, 30], [60, 30], [85, 30], [110, 30], [135, 30],
+                        [10, 55], [35, 55], [60, 55], [85, 55], [110, 55], [135, 55],
+                        [10, 80], [35, 80], [60, 80], [85, 80], [110, 80], [135, 80],
+                        [10, 105], [35, 105], [60, 105], [85, 105], [110, 105], [135, 105] ];
+
+        var radius = 4;
+        var color = '#add8e6';
+
+        // Draw circles
+        for (var i = 0; i < nodes; ++i) {
+          draw_circle(coords[i], color, radius);        
+        }
+
+        // Draw horizontal lines
+        for (var i = 0; i < rows; ++i) {
+          for (var j = 0; j < columns-1; ++j) {
+            draw_line(coords[columns*i + j], coords[columns*i + j+1], color, radius);        
+          } 
+        }
+
+        // Draw vertical lines
+        for (var i = 0; i < rows-1; ++i) {
+          for (var j = 0; j < columns; ++j) {
+            draw_line(coords[columns*i + j], coords[columns*(i+1) + j], color, radius);        
+          } 
         }
 
         var position = coords[0];
+        draw_circle(position, 'red', radius);     
 
         function next_coord(coord, movement){
+          alert("hola");
           var coordinate;  
           switch(movement) {
             case 'left':
-            coordinate = [coord[0] - 100, coord[1]];
+            coordinate = [coord[0] - 25, coord[1]];
             break;
 
             case 'right':
-            coordinate = [coord[0] + 100, coord[1]];
+            coordinate = [coord[0] + 25, coord[1]];
             break;
 
             case 'up':
-            coordinate = [coord[0], coord[1] + 100];
+            coordinate = [coord[0], coord[1] + 25];
             break;
 
             case 'down':
-            coordinate = [coord[0], coord[1] - 100];
+            coordinate = [coord[0], coord[1] - 25];
             break;
           }
           return coordinate; 
         }
 
         function set_coord(movement){
+        alert("hola");
           switch(movement) {
             case 'left':
-            position[0] = position[0] - 100;
+            position[0] = position[0] - 25;
             break;
 
             case 'right':
-            position[0] = position[0] + 100;
+            position[0] = position[0] + 25;
             break;
 
             case 'up':
-            position[1] = position[1] + 100;
+            position[1] = position[1] + 25;
             break;
 
             case 'down':
-            position[1] = position[1] - 100;
+            position[1] = position[1] - 25;
             break;
           }
         }
         
         function button_click(movement){
+        alert("hola");
           switch(movement) {
             case 'left':
               var coordinate = next_coord(position, 'left');
-              draw_circle(coordinate, 'red', 20);     
+              draw_circle(coordinate, 'red', radius);     
               set_coord('left');
             break;
 
             case 'right':
               var coordinate = next_coord(position, 'right');
-              draw_circle(coordinate, 'red', 20);     
+              alert(coordinate);
+              draw_circle(coordinate, 'red', radius);     
               set_coord('right');
             break;
 
             case 'up':
               var coordinate = next_coord(position, 'up');
-              draw_circle(coordinate, 'red', 20);     
+              draw_circle(coordinate, 'red', radius);     
               set_coord('up');
             break;
 
@@ -120,10 +160,11 @@
               var coordinate = next_coord(position, 'down');
               
               alert(coordinate);
-              draw_circle(coordinate, 'red', 20);     
+              draw_circle(coordinate, 'red', radius);     
               set_coord('down');
             break;
           }
+          alert("hola");
         }
 
       </script>
