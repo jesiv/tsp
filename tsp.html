@@ -19,21 +19,21 @@
         <h3> Acciones </h3>
         <ul>
           <li><button type="button" onclick="start()">Empezar</button></li>
-          <li><button type="button" onclick="button_click('up');">Arriba</button></li>
-          <li><button type="button" onclick="button_click('down');">Abajo</button></li>
-          <li><button type="button" onclick="button_click('left');">Izquierda</button></li>
-          <li><button type="button" onclick="button_click('right');">Derecha</button></li>
+          <li><button id="button_up" type="button" onclick="button_click('up');">Arriba</button></li>
+          <li><button id="button_down" type="button" onclick="button_click('down');">Abajo</button></li>
+          <li><button id="button_left" type="button" onclick="button_click('left');">Izquierda</button></li>
+          <li><button id="button_right" type="button" onclick="button_click('right');">Derecha</button></li>
         </ul>
       </div><!--actions_menu end-->
 
       <div id="counter_div">
         <p id="counter_text">Cantidad de pasos realizados:</p>
         <p id="counter"><span>0</span></p>
-      </div>
+      </div><!--counter_div end-->
       
       <div id="graph_container">
         <canvas id="graph" width='750px' height='200px'></canvas>
-      </div>
+      </div><!--graph_container end-->
 
       <script>
         function draw_circle(coords, color, radius){
@@ -152,6 +152,7 @@
         }
 
         function start(){
+          enable_buttons();
           // Draw horizontal lines
           clicks = 0;
           for (var i = 0; i < rows; ++i) {
@@ -178,7 +179,32 @@
           var counter = document.getElementById('counter');
           counter.innerHTML = clicks;
           draw_special_nodes(path1);
+          start_buttons();
+        }
 
+        function start_buttons(){
+          disable_button("button_left");
+          disable_button("button_up");
+        }
+        
+         var coords = [ [20, 30], [70, 30], [120, 30], [170, 30], [220, 30], [270, 30],
+                        [20, 80], [70, 80], [120, 80], [170, 80], [220, 80], [270, 80],
+                        [20, 130], [70, 130], [120, 130], [170, 130], [220, 130], [270, 130],
+                        [20, 180], [70, 180], [120, 180], [170, 180], [220, 180], [270, 180] ];
+        
+        //uses columns and rows variables  
+        function restore_buttons(){
+          var left = coords[0][0];
+          var right = coords[columns - 1][0];
+          var up = coords[0][1];
+          var down = coords[coords.length - 1][1];  
+
+          enable_buttons();
+          
+          if(position[0] == left) disable_button("button_left");  
+          if(position[0] == right) disable_button("button_right");  
+          if(position[1] == up) disable_button("button_up");  
+          if(position[1] == down) disable_button("button_down");  
         }
         
         function button_click(movement){
@@ -213,6 +239,18 @@
           var counter = document.getElementById('counter');
           counter.innerHTML = clicks;
           draw_special_nodes(path1);
+          restore_buttons();
+        }
+        
+        function enable_buttons() {
+          document.getElementById("button_up").disabled = false;
+          document.getElementById("button_down").disabled = false;
+          document.getElementById("button_left").disabled = false;
+          document.getElementById("button_right").disabled = false;
+        }
+
+        function disable_button(id){
+          document.getElementById(id).disabled = true;
         }
 
       </script>
