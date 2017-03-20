@@ -59,6 +59,20 @@
           context.strokeStyle = '#002e63'; 
           context.stroke();
         }
+  
+        var size_of_cross = 5;
+
+        function draw_X(x, y) {
+          var canvas = document.getElementById('graph');
+          var context = canvas.getContext('2d');
+          context.moveTo(x - size_of_cross, y - size_of_cross);
+          context.lineTo(x + size_of_cross, y + size_of_cross);
+          context.stroke();
+
+          context.moveTo(x + size_of_cross, y - size_of_cross);
+          context.lineTo(x - size_of_cross, y + size_of_cross);
+          context.stroke();
+        }
 
          //var coords= [ [20, 50], [20,80], [20,110], [50, 50], [50,80], [50,110], [80, 50], [80,80], [80,110] ];
          //var coords = [ [50, 50], [150, 50], [250, 50], [50, 150], [150, 150], [250, 150] ];
@@ -82,8 +96,18 @@
         var clicks = 0;
         
         var value = 50;
+
+        //path1 está hardcodeado en click
+        var path1 = [ [20, 130], [20, 180], [70, 180], [120, 30], [220, 30], [270, 130] ];
+        var path2 = [ [20, 30], [70, 30], [120, 30], [170, 30], [220, 30], [270, 30] ];
         
         start();
+
+        function draw_special_nodes(nodes){
+          for(var i = 0; i < nodes.length; i++){
+            draw_X(nodes[i][0], nodes[i][1]);   
+          }
+        }
 
         function next_coord(coord, movement){
           var coordinate;  
@@ -149,40 +173,46 @@
           }
 
           position = [20, 30]
-          draw_circle(position, 'red', radius);     
+          //actual node
+          draw_circle(position, 'green', radius);     
           var counter = document.getElementById('counter');
           counter.innerHTML = clicks;
+          draw_special_nodes(path1);
+
         }
         
         function button_click(movement){
+          draw_circle(position, 'red', radius);     
           switch(movement) {
             case 'left':
               var coordinate = next_coord(position, 'left');
-              draw_circle(coordinate, 'red', radius);     
+              draw_circle(coordinate, 'green', radius);     
               set_coord('left');
             break;
 
             case 'right':
               var coordinate = next_coord(position, 'right');
-              draw_circle(coordinate, 'red', radius);     
+              draw_circle(coordinate, 'green', radius);     
               set_coord('right');
             break;
 
             case 'up':
               var coordinate = next_coord(position, 'up');
-              draw_circle(coordinate, 'red', radius);     
+              draw_circle(coordinate, 'green', radius);     
               set_coord('up');
             break;
 
             case 'down':
               var coordinate = next_coord(position, 'down');
-              draw_circle(coordinate, 'red', radius);     
+              draw_circle(coordinate, 'green', radius);     
               set_coord('down');
             break;
           }
+
           clicks += 1;
           var counter = document.getElementById('counter');
           counter.innerHTML = clicks;
+          draw_special_nodes(path1);
         }
 
       </script>
