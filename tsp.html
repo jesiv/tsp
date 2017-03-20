@@ -25,6 +25,11 @@
           <li><button type="button" onclick="button_click('right');">Derecha</button></li>
         </ul>
       </div><!--actions_menu end-->
+
+      <div id="counter_div">
+        <p id="counter_text">Cantidad de pasos realizados:</p>
+        <p id="counter"><span>0</span></p>
+      </div>
       
       <div id="graph_container">
         <canvas id="graph" width='750px' height='200px'></canvas>
@@ -73,7 +78,8 @@
 
         var radius = 15;
         var color = '#add8e6';
-        var position = coords[0];
+        var position = [20, 30];
+        var clicks = 0;
         
         var value = 50;
         
@@ -122,8 +128,8 @@
         }
 
         function start(){
-          position = coords[0];
           // Draw horizontal lines
+          clicks = 0;
           for (var i = 0; i < rows; ++i) {
             for (var j = 0; j < columns-1; ++j) {
               draw_line(coords[columns*i + j], coords[columns*i + j+1], color, radius);        
@@ -142,7 +148,10 @@
             draw_circle(coords[i], color, radius);        
           }
 
+          position = [20, 30]
           draw_circle(position, 'red', radius);     
+          var counter = document.getElementById('counter');
+          counter.innerHTML = clicks;
         }
         
         function button_click(movement){
@@ -171,6 +180,9 @@
               set_coord('down');
             break;
           }
+          clicks += 1;
+          var counter = document.getElementById('counter');
+          counter.innerHTML = clicks;
         }
 
       </script>

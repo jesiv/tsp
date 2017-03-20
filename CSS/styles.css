@@ -23,7 +23,7 @@ body{
 #graph {
   margin: 0;
   padding-left: 0px;
-  padding-right: 0;
+  padding-right: 0px;
  /* margin-left: auto;
   margin-right: auto;*/
   text-align: center;
@@ -38,12 +38,29 @@ h2 {
   color: #fff;
 }
 
+ul {
+  list-style-type: none;
+}
+
+li {
+  width: 70px;
+}
+
+#counter_text {
+  padding-left: 450px;
+}
+
+#counter {
+  padding-left: 600px;
+}
+
 #actions_menu {
-  width:5px;
+  width: 15px;
   height:100px;
   float:left;
 }
 
 button {
   position: relative;
+  width: 70px;
 }
