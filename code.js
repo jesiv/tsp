@@ -210,15 +210,20 @@ function button_click(movement){
       set_coord('down');
     break;
   }
-
-  clicks += 1;
-  var counter = document.getElementById('counter');
-  counter.innerHTML = clicks;
+  
+  restore_counter();
   draw_special_nodes(path1);
   restore_buttons();
 }
 
-function enable_buttons() {
+function restore_counter(){
+  clicks += 1;
+  var counter = document.getElementById('counter');
+  counter.innerHTML = clicks;
+
+}
+
+function enable_buttons(){
   document.getElementById("button_up").disabled = false;
   document.getElementById("button_down").disabled = false;
   document.getElementById("button_left").disabled = false;
